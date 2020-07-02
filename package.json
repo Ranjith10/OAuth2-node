@@ -1,0 +1,29 @@
+{
+  "name": "oauth2-node",
+  "version": "1.0.0",
+  "description": "OAuth2 with PassportJS",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ranjith10/OAuth2-node.git"
+  },
+  "author": "Ranjith Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ranjith10/OAuth2-node/issues"
+  },
+  "homepage": "https://github.com/Ranjith10/OAuth2-node#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-jwt": "^4.0.0"
+  }
+}
