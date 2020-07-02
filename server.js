@@ -18,6 +18,20 @@ app.get('/', (req, res) => {
     console.log("In the root of the application")
 })
 
+const isLoggedIn = (req, res, next) => {
+    if (req.user) {
+        next();
+    } else {
+        res.sendStatus(401);
+    }
+}
+
+app.get('/failed', (req, res) => res.send('You Failed to log in!'))
+
+// In this route you can see that if the user is logged in u can acess his info in: req.user
+app.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
+
+
 var opts = {}
 opts.jwtFromRequest = function(req) {
     var token = null;
@@ -31,7 +45,7 @@ opts.jwtFromRequest = function(req) {
 passport.use(new facebookStrategy({
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/facebookRedirect",
+        callbackURL: "http://localhost:3000/facebook-redirect",
         profileFields: ['id', 'displayName', 'email', 'picture']
     },
     function(accessToken, refreshToken, profile, cb) {
@@ -41,14 +55,18 @@ passport.use(new facebookStrategy({
     })
 );
 
-app.get('/profile', passport.authenticate('jwt', { session: false }) ,(req,res)=>{
-    res.send(`THIS IS UR PROFILE MAAANNNN ${req.user.email}`)
-})
+passport.serializeUser(function(user, cb) {
+    cb(null, user);
+});
+  
+passport.deserializeUser(function(obj, cb) {
+    cb(null, obj);
+});
 
 //Handle Facebook authentication
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}))
 
-app.get('/facebook-redirect', passport.authenticate('facebook', {scope: 'email'}, (req, res) => {
+app.get('/facebook-redirect', passport.authenticate('facebook', {scope: 'email', failureRedirectt: '/failed' }, (req, res) => {
     console.log('Facebook redirection!')
     let user = {
         displayName: req.user.displayName,
@@ -57,40 +75,9 @@ app.get('/facebook-redirect', passport.authenticate('facebook', {scope: 'email'}
         provider: req.user.provider
     }
     console.log({user})
-    
-    findOrCreate(user)
-    let token = jwt.sign({
-        data: user,},
-        secret,
-        {expiresIn : '1h'}
-    )
     res.cookie('jwt', token)
-    res.redirect('/')
+    res.redirect('/good')
 }))
-
-function findOrCreate(user){
-    if(CheckUser(user)){  // if user exists then return user
-        return user
-    }else{
-        DATA.push(user) // else create a new user
-    }
-}
-function CheckUser(input){
-    console.log(DATA)
-    console.log(input)
-  
-    for (var i in DATA) {
-        if(input.email==DATA[i].email && (input.password==DATA[i].password || DATA[i].provider==input.provider))
-        {
-            console.log('User found in DATA')
-            return true
-        }
-        else
-         null
-            //console.log('no match')
-      }
-    return false
-}
 
 app.listen(port, () => {
     console.log("App started at", port)
