@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const app = express()
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(passport.initialize())
 
@@ -19,37 +19,35 @@ app.get('/', (req, res) => {
 })
 
 const isLoggedIn = (req, res, next) => {
-    if (req.user) {
-        next();
-    } else {
-        res.sendStatus(401);
-    }
+    let authHeader = req.header.cookie
+    if(!authHeader) return res.status(401).send({message: 'You are not authorized for this resource'})
+
+    // let token = authHeader.split(' ')[1]
+    jwt.verify(authHeader, secret, (err, user) => {
+        if(err) return res.status(403)
+        console.log({user})
+        req.user = user
+        next()
+    })
 }
 
-app.get('/failed', (req, res) => res.send('You Failed to log in!'))
+app.get('auth/failed', (req, res) => res.send('You Failed to log in!'))
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
-app.get('/good', isLoggedIn, (req, res) => res.send(`Welcome mr ${req.user.displayName}!`))
+app.get('/good', isLoggedIn ,(req, res) => {
+    let a = req.headers
+    console.dir(a)
 
-
-var opts = {}
-opts.jwtFromRequest = function(req) {
-    var token = null;
-    if (req && req.cookies)
-    {
-        token = req.cookies['jwt'];
-    }
-    return token;
-};
+    res.send(`Welcome mr ${req}!`)
+})
 
 passport.use(new facebookStrategy({
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/facebook-redirect",
+        callbackURL: "http://localhost:3000/auth/facebook/redirect",
         profileFields: ['id', 'displayName', 'email', 'picture']
     },
-    function(accessToken, refreshToken, profile, cb) {
-        console.log(profile)
+    (accessToken, refreshToken, profile, cb) => {
         console.log("FACEBOOK BASED OAUTH VALIDATION GETTING CALLED")
         return cb(null, profile);
     })
@@ -66,18 +64,11 @@ passport.deserializeUser(function(obj, cb) {
 //Handle Facebook authentication
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}))
 
-app.get('/facebook-redirect', passport.authenticate('facebook', {scope: 'email', failureRedirectt: '/failed' }, (req, res) => {
-    console.log('Facebook redirection!')
-    let user = {
-        displayName: req.user.displayName,
-        name: req.user._json.name,
-        email: req.user._json.email,
-        provider: req.user.provider
-    }
-    console.log({user})
-    res.cookie('jwt', token)
-    res.redirect('/good')
-}))
+app.get('/auth/facebook/redirect', passport.authenticate('facebook', {scope: 'email'}), (req, res) => {
+    
+    res.send(`Welcome Mr.${req.user.displayName}`)
+    // res.redirect('/good')
+})
 
 app.listen(port, () => {
     console.log("App started at", port)
