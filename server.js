@@ -4,41 +4,33 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const facebookStrategy = require('passport-facebook').Strategy
 const jwt = require('jsonwebtoken')
+expressSession = require('express-session')({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+  })
 require('dotenv').config()
 
 const app = express()
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(passport.initialize())
+app.use(expressSession)
 
 const secret = process.env.secretKey
 const port = process.env.PORT || 3000
+
 //root route
 app.get('/', (req, res) => {
     console.log("In the root of the application")
 })
 
-const isLoggedIn = (req, res, next) => {
-    let authHeader = req.header.cookie
-    if(!authHeader) return res.status(401).send({message: 'You are not authorized for this resource'})
-
-    // let token = authHeader.split(' ')[1]
-    jwt.verify(authHeader, secret, (err, user) => {
-        if(err) return res.status(403)
-        console.log({user})
-        req.user = user
-        next()
-    })
-}
-
+//Invalid credentials / denied access
 app.get('auth/failed', (req, res) => res.send('You Failed to log in!'))
 
 // In this route you can see that if the user is logged in u can acess his info in: req.user
-app.get('/good', isLoggedIn ,(req, res) => {
-    let a = req.headers
-    console.dir(a)
-
-    res.send(`Welcome mr ${req}!`)
+app.get('/profile',(req, res) => {
+    res.send(`Welcome mr ${req.session.user.displayName}!`)
 })
 
 passport.use(new facebookStrategy({
@@ -54,20 +46,21 @@ passport.use(new facebookStrategy({
 );
 
 passport.serializeUser(function(user, cb) {
-    cb(null, user);
+    cb(null, user.id);
 });
   
 passport.deserializeUser(function(obj, cb) {
+    console.log({obj}, "in deser")
     cb(null, obj);
 });
 
 //Handle Facebook authentication
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}))
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
 
-app.get('/auth/facebook/redirect', passport.authenticate('facebook', {scope: 'email'}), (req, res) => {
-    
-    res.send(`Welcome Mr.${req.user.displayName}`)
-    // res.redirect('/good')
+//Oauth callback 
+app.get('/auth/facebook/redirect', passport.authenticate('facebook', {scope: ['email']}), (req, res) => {
+    req.session.user = req.user;
+    res.redirect('/profile')
 })
 
 app.listen(port, () => {
