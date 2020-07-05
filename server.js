@@ -1,37 +1,37 @@
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
 const facebookStrategy = require('passport-facebook').Strategy
-const jwt = require('jsonwebtoken')
 expressSession = require('express-session')({
     secret: 'secret',
     resave: false,
     saveUninitialized: false
   })
 require('dotenv').config()
+const profileRouter = require('./routes/profile')
+const authenticationRouter = require('./routes/authentication')
 
 const app = express()
-app.use(bodyParser.json())
-app.use(cookieParser())
-app.use(passport.initialize())
-app.use(expressSession)
 
+//Fetching the secure info from env file
 const secret = process.env.secretKey
 const port = process.env.PORT || 3000
+
+//Initialising the middleware
+app.use(bodyParser.json())
+app.use(passport.initialize())
+app.use(expressSession)
 
 //root route
 app.get('/', (req, res) => {
     console.log("In the root of the application")
 })
 
-//Invalid credentials / denied access
-app.get('auth/failed', (req, res) => res.send('You Failed to log in!'))
+//Redirecting to Oauth2.0 Authentication
+app.use('/auth', authenticationRouter)
 
-// In this route you can see that if the user is logged in u can acess his info in: req.user
-app.get('/profile',(req, res) => {
-    res.send(`Welcome mr ${req.session.user.displayName}!`)
-})
+//Redirecting to profile 
+app.use('/profile', profileRouter)
 
 passport.use(new facebookStrategy({
         clientID: process.env.FACEBOOK_CLIENT_ID,
@@ -54,14 +54,6 @@ passport.deserializeUser(function(obj, cb) {
     cb(null, obj);
 });
 
-//Handle Facebook authentication
-app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}))
-
-//Oauth callback 
-app.get('/auth/facebook/redirect', passport.authenticate('facebook', {scope: ['email']}), (req, res) => {
-    req.session.user = req.user;
-    res.redirect('/profile')
-})
 
 app.listen(port, () => {
     console.log("App started at", port)
