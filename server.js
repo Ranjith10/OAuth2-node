@@ -1,7 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const bodyParser = require('body-parser')
-expressSession = require('express-session')({
+const expressSession = require('express-session')({
     secret: 'secret',
     resave: false,
     saveUninitialized: false
@@ -13,7 +13,7 @@ const passportConfig = require('./config/passportConfig')
 
 //Setting up Express APP
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 //Initialising the middleware
 app.use(bodyParser.json())
