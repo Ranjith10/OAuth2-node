@@ -1,0 +1,77 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 65%;
+}
+.login-wrapper > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+}
+.app-title {
+    display: flex;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    color: rgb(20, 23, 26);
+    font-size: 22px;
+    font-weight: 600;
+}
+form > div {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px 0;
+    width: 100%;
+}
+form > div > input {
+    width: 60%;
+    height: 40px;
+    padding: 10px;
+    border: none;
+    outline-style: none;
+    border-bottom: 2px solid #657786;
+    font-size: 16px;
+}
+form > div > input:focus {
+    background-color: #E8F0FE;
+    border: none;
+    outline-style: none;
+    border-bottom: 1px solid #1DA1F2;
+}
+.other-user-actions {
+    display: flex;
+  }
+  .other-user-actions > div {
+    margin-right: 10px;
+    color: #1B9DE7;
+    cursor: pointer;
+  }
+  .other-user-actions > .other-action-text {
+    margin-right: 10px;
+    color: #1B9DE7;
+    cursor: text;
+  }
+  .other-user-actions > a {
+    text-decoration: none;
+    color: #1B9DE7;
+  }
+  .login-submit-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 40px;
+    margin: 30px 0 20px 0;
+    background-color: rgb(29, 161, 242);
+    outline-style: none;
+    border: 0;
+    border-radius: 20px;
+    font-size: 16px;
+    color: #FFF;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
