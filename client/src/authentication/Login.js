@@ -9,6 +9,8 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('')
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const [passwordType, setPasswordType] = useState('password')
 
     const handleLoginSubmit= async (event) => {
         event.preventDefault()
@@ -47,10 +49,25 @@ const Login = () => {
         
     }
 
+    const handlePasswordToggle = () => {
+        setIsPasswordVisible(!isPasswordVisible)
+        passwordType === 'password' ? setPasswordType('input') : setPasswordType('password')
+    }
+
     return (
         <div className = 'login-wrapper'>
-            <div className = 'app-title'>
-                Login to the Demo App
+            <div className = 'app-title login'>
+                Login to your account
+            </div>
+            <div className = 'other-user-actions login'>
+                <div className = 'sign-up-text'>
+                    Don't have an account?
+                </div>
+                <NavLink to ='/register'>
+                    <div className = 'sign-up'>
+                        Sign up for app!
+                    </div>
+                </NavLink>
             </div>
             <form 
                 onSubmit = {handleLoginSubmit}
@@ -66,15 +83,22 @@ const Login = () => {
                         placeholder = "Enter the registered E-mail"
                     />
                 </div>
-                <div>
+                <div className = 'pwd-input'>
                     <input 
-                        type = 'password'
+                        type = {passwordType}
                         value = {password}
                         onChange = {(e) => setPassword(e.target.value)}
                         className = 'password-input'
                         id = 'passwordInput'
                         placeholder = "Enter the password"
                     />
+                    {
+                        isPasswordVisible 
+                            ?
+                                <span className = 'far fa-eye' onClick = {handlePasswordToggle} />                            
+                            :
+                                <span className = 'far fa-eye-slash' onClick = {handlePasswordToggle}/>
+                    }
                 </div>
                 <button 
                     type = 'submit'
@@ -84,16 +108,6 @@ const Login = () => {
                     Login
                 </button>
             </form>
-            <div className = 'other-user-actions'>
-                <div className = 'forgot-password'>
-                    Forgot Password?
-                </div>
-                <NavLink to ='/register'>
-                    <div className = 'sign-up'>
-                        Sign up for app
-                    </div>
-                </NavLink>
-            </div>    
         </div>
     )
 }

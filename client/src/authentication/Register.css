@@ -51,7 +51,7 @@ form > div > input:focus {
     background-color: rgb(29, 161, 242);
     outline-style: none;
     border: 0;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 16px;
     color: #FFF;
     font-weight: 600;
@@ -59,4 +59,7 @@ form > div > input:focus {
 }
 .role-selection {
     width: 63%;
+}
+.re-enter-password {
+    position: relative;
 }

@@ -17,8 +17,9 @@
     padding: 10px;
     margin: 0 0 10px 0;
     color: rgb(20, 23, 26);
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 26px;
+    font-weight: bold;
+    color: #2D385E;
 }
 form > div {
     display: flex;
@@ -43,22 +44,23 @@ form > div > input:focus {
 }
 .other-user-actions {
     display: flex;
-  }
-  .other-user-actions > div {
-    margin-right: 10px;
+}
+.sign-up {
+    margin-left: 10px;
     color: #1B9DE7;
     cursor: pointer;
-  }
-  .other-user-actions > .other-action-text {
+    font-weight: 500;
+}
+.other-user-actions > .other-action-text {
     margin-right: 10px;
     color: #1B9DE7;
     cursor: text;
-  }
-  .other-user-actions > a {
+}
+.other-user-actions > a {
     text-decoration: none;
     color: #1B9DE7;
-  }
-  .login-submit-button {
+}
+.login-submit-button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,10 +70,30 @@ form > div > input:focus {
     background-color: rgb(29, 161, 242);
     outline-style: none;
     border: 0;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 16px;
     color: #FFF;
     font-weight: 600;
     cursor: pointer;
-  }
-  
+}
+.other-user-actions.login {
+    margin-bottom: 30px;
+}
+.app-title.login {
+    margin: 0px;
+}
+.sign-up-text {
+    color: #2D385E;
+}
+.pwd-input {
+    position: relative;
+}
+.far.fa-eye, .far.fa-eye-slash {
+    position: absolute;
+    top: calc(50% - 0.5em);
+    right: 20%;
+    cursor: pointer;
+}
+.far.fa-eye-slash {
+    color: #8f8f8f;
+}

@@ -32,7 +32,8 @@ const Register = (props) => {
     const [isEmailValid, setIsEmailValid] = useState(true)
     const [roles, setRoles] = useState([])
     const [selectedRole, setSelectedRole] = useState(null)
-
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+    const [passwordType, setPasswordType] = useState('password')
 
     const handleRoleSelection = (selectedRole) => {
         setSelectedRole(selectedRole)
@@ -119,6 +120,11 @@ const Register = (props) => {
         }    
     }
 
+    const handlePasswordToggle = () => {
+        setIsPasswordVisible(!isPasswordVisible)
+        passwordType === 'password' ? setPasswordType('input') : setPasswordType('password')
+    }
+
     return (
         <div className = 'register-wrapper'>
             <div className = 'app-title'>
@@ -169,9 +175,9 @@ const Register = (props) => {
                         required
                     />
                 </div>
-                <div>
+                <div className = 're-enter-password'>
                     <input 
-                        type = 'password'
+                        type = {passwordType}
                         value = {repeatPassword}
                         onChange = {(e) => setRepeatPassword(e.target.value)}
                         onBlur = {(e) => handleReenterPassword(e)}
@@ -179,6 +185,13 @@ const Register = (props) => {
                         placeholder = "Re-Enter your password"
                         required
                     />
+                    {
+                        isPasswordVisible 
+                            ?
+                                <span className = 'far fa-eye' onClick = {handlePasswordToggle} />                            
+                            :
+                                <span className = 'far fa-eye-slash' onClick = {handlePasswordToggle}/>
+                    }
                 </div>
                 {
                     !isEmailValid
