@@ -57,7 +57,7 @@ const Login = () => {
 
     return (
         <div className="login-wrapper">
-            <div className="app-title login">Login to your account</div>
+            <div className="app-title login"> Login to your account</div>
             <div className="other-user-actions login">
                 <div className="sign-up-text">Don't have an account?</div>
                 <NavLink to="/register">
