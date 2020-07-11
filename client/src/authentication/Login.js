@@ -56,50 +56,50 @@ const Login = () => {
     }
 
     return (
-        <div className="login-wrapper">
-            <div className="app-title login"> Login to your account</div>
-            <div className="other-user-actions login">
-                <div className="sign-up-text">Don't have an account?</div>
-                <NavLink to="/register">
-                    <div className="sign-up">Sign up for app!</div>
+        <div className = 'login-wrapper'>
+            <div className = 'app-title login'>Login to your account</div>
+            <div className = 'other-user-actions login'>
+                <div className = 'sign-up-text'>Don't have an account?</div>
+                <NavLink to = '/register'>
+                    <div className = 'sign-up'>Sign up for app!</div>
                 </NavLink>
             </div>
-            <form onSubmit={handleLoginSubmit} autoComplete="off">
+            <form autoComplete = 'off' onSubmit = { handleLoginSubmit }>
                 <div>
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="email-input"
-                        id="emailInput"
-                        placeholder="Enter the registered E-mail"
+                        className = 'email-input'
+                        id = 'emailInput'
+                        onChange = { (e) => setEmail(e.target.value) }
+                        placeholder = 'Enter the registered E-mail'
+                        type = 'email'
+                        value = { email }
                     />
                 </div>
-                <div className="pwd-input">
+                <div className = 'pwd-input'>
                     <input
-                        type={passwordType}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="password-input"
-                        id="passwordInput"
-                        placeholder="Enter the password"
+                        className = 'password-input'
+                        id = 'passwordInput'
+                        onChange = { (e) => setPassword(e.target.value) }
+                        placeholder = 'Enter the password'
+                        type = { passwordType }
+                        value = { password }
                     />
                     {isPasswordVisible ? (
-                        <span
-                            className="far fa-eye"
-                            onClick={handlePasswordToggle}
+                        <button
+                            className = 'far fa-eye'
+                            onClick = { handlePasswordToggle }
                         />
                     ) : (
-                        <span
-                            className="far fa-eye-slash"
-                            onClick={handlePasswordToggle}
+                        <button
+                            className = 'far fa-eye-slash'
+                            onClick = { handlePasswordToggle }
                         />
                     )}
                 </div>
                 <button
-                    type="submit"
-                    onClick={handleLoginSubmit}
-                    className="login-submit-button"
+                    className = 'login-submit-button'
+                    onClick = { handleLoginSubmit }
+                    type = 'submit'
                 >
                     Login
                 </button>

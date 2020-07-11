@@ -7,7 +7,6 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
-
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -38,11 +37,12 @@
   },
   "proxy": "http://localhost:5000/",
   "devDependencies": {
-    "prettier": "^2.0.5",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.6"
+    "eslint-plugin-react-hooks": "^4.0.6",
+    "prettier": "^2.0.5"
   }
 }

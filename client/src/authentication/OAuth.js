@@ -30,8 +30,8 @@ const OAuth = () => {
                         <i className = 'fab fa-google-plus-g' />
                         Signin with Google
                     </div>
-                    <div className = 'social-login facebook' onClick = {() => handleFacebookLogin()}>
-                        <i className = 'fab fa-facebook-f' aria-hidden="true" />
+                    <div className = 'social-login facebook' onClick = { () => handleFacebookLogin() }>
+                        <i aria-hidden = 'true' className = 'fab fa-facebook-f' />
                         Signin with Facebook
                     </div>
                     <div className = 'social-login twitter'>

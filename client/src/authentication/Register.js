@@ -144,69 +144,69 @@ const Register = (props) => {
     }
 
     return (
-        <div className="register-wrapper">
-            <div className="app-title">Create your account</div>
-            <form onSubmit={handleRegisterSubmit} autoComplete="off">
+        <div className = 'register-wrapper'>
+            <div className = 'app-title'>Create your account</div>
+            <form autoComplete = 'off' onSubmit = { handleRegisterSubmit }>
                 <div>
                     <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="register-name-input"
-                        placeholder="Enter your name"
+                        className = 'register-name-input'
+                        onChange = { (e) => setName(e.target.value) }
+                        placeholder = 'Enter your name'
                         required
+                        type = 'text'
+                        value = { name }
                     />
                 </div>
                 <div>
                     <input
-                        type="email"
-                        value={email}
-                        onBlur={(e) => validateEmail(e)}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="register-email-input"
-                        placeholder="Enter your E-mail"
+                        className = 'register-email-input'
+                        onBlur = { (e) => validateEmail(e) }
+                        onChange = { (e) => setEmail(e.target.value) }
+                        placeholder = 'Enter your E-mail'
                         required
+                        type = 'email'
+                        value = { email }
                     />
                 </div>
                 <div>
                     <Select
-                        options={roles}
-                        value={selectedRole}
-                        onChange={handleRoleSelection}
-                        className="role-selection"
-                        placeholder="Select a role"
-                        styles={customStyle}
+                        className = 'role-selection'
+                        onChange = { handleRoleSelection }
+                        options = { roles }
+                        placeholder = 'Select a role'
+                        styles = { customStyle }
+                        value = { selectedRole }
                     />
                 </div>
                 <div>
                     <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="register-password-input"
-                        placeholder="Enter your password"
+                        className = 'register-password-input'
+                        onChange = { (e) => setPassword(e.target.value) }
+                        placeholder = 'Enter your password'
                         required
+                        type = 'password'
+                        value = { password }
                     />
                 </div>
-                <div className="re-enter-password">
+                <div className = 're-enter-password'>
                     <input
-                        type={passwordType}
-                        value={repeatPassword}
-                        onChange={(e) => setRepeatPassword(e.target.value)}
-                        onBlur={(e) => handleReenterPassword(e)}
-                        className="register-password-input"
-                        placeholder="Re-Enter your password"
+                        className = 'register-password-input'
+                        onBlur = { (e) => handleReenterPassword(e) }
+                        onChange = { (e) => setRepeatPassword(e.target.value) }
+                        placeholder = 'Re-Enter your password'
                         required
+                        type = { passwordType }
+                        value = { repeatPassword }
                     />
                     {isPasswordVisible ? (
                         <span
-                            className="far fa-eye"
-                            onClick={handlePasswordToggle}
+                            className = 'far fa-eye'
+                            onClick = { handlePasswordToggle }
                         />
                     ) : (
                         <span
-                            className="far fa-eye-slash"
-                            onClick={handlePasswordToggle}
+                            className = 'far fa-eye-slash'
+                            onClick = { handlePasswordToggle }
                         />
                     )}
                 </div>
@@ -217,19 +217,19 @@ const Register = (props) => {
                     <div>Passwords do not match, re-enter the password</div>
                 ) : null}
                 <button
-                    type="submit"
-                    onClick={handleRegisterSubmit}
-                    className="register-submit-button"
+                    className = 'register-submit-button'
+                    onClick = { handleRegisterSubmit }
+                    type = 'submit'
                 >
                     Sign Up
                 </button>
             </form>
-            <div className="other-user-actions">
-                <div className="other-action-text">
+            <div className = 'other-user-actions'>
+                <div className = 'other-action-text'>
                     Already have an account!
                 </div>
-                <NavLink to="/login">
-                    <div className="sign-up">Login</div>
+                <NavLink to = '/login'>
+                    <div className = 'sign-up'>Login</div>
                 </NavLink>
             </div>
         </div>
